@@ -201,4 +201,6 @@ though it would have been perfect if the R5C had of had GPIO's and some way of a
 a POE module.
 
 
+## Connection..
 
+Need a thing here for connections - coming soon(tm)
