@@ -172,8 +172,6 @@ refclock PPS /dev/pps0 refid PPS lock NMEA poll 0
 
 And, lets reboot one more time.
 
-adjust pps.conf offset
-
 Once the router has rebooted, you should find it will stabilise out to something
 along these lines (the L80 GPS is one of the best units i've ever used in terms
 of stability, kicks the Neo6m and mkt units out the door):
