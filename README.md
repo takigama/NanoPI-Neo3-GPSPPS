@@ -147,7 +147,10 @@ But, that could be different based on the firmware on the L80, in any case, lets
 assume its 50ms.
 
 Edit /etc/chrony/conf.d/pps.conf and modify the first line (note 50 == 0.05):
+
+```
 refclock SHM 0 refid NMEA noselect poll 0 offset 0.05 noselect
+```
 
 Then restart chrony:
 
