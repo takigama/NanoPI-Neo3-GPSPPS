@@ -106,7 +106,9 @@ time_pps_fetch() error -1 (Connection timed out)
 ```
 
 It means either the gps isn't connected properly or the gps isnt actually sending a
-pps signal yet, lets just wait for it to assert or check connectivity on the gps
+pps signal yet, lets just wait for it to assert or check connectivity on the gps. Its also
+possible that for some reason the pps line came up as pp1 (run ppstest /dev/pps1 to check
+and if it does, adjust your settings to use pps1 instead)
 
 Now, lets get the chrony going, copy pps.conf (from the github repo) to /etc/chrony/conf.d
 and lets reboot again.
