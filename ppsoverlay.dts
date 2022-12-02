@@ -1,0 +1,16 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+  compatible = "pine64,rock64", "rockchip,rk3328";
+
+  fragment@0 {
+    target-path = "/";
+    __overlay__ {
+      pps: pps@0 {
+        compatible = "pps-gpio";
+        gpios = <&gpio2 2 0>;
+      };
+    };
+  };
+};

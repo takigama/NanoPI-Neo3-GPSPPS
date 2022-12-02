@@ -1,0 +1,13 @@
+for i in "1 2 3 4 5"
+do
+        echo $i > /tmp/res
+        sleep 1
+        stty -F /dev/ttyS1 9600 cs8
+        echo -e '$PMTK314,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0*28\r\n' > /dev/ttyS1
+        echo -e '$PMTK251,115200*1F\r\n' > /dev/ttyS1
+        stty -F /dev/ttyS1 115200 cs8
+        sleep 1
+done
+
+
+/usr/sbin/gpsd -N -n -S 2947 /dev/ttyS1 > /tmp/gpsd.log 2>&1 &
