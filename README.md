@@ -186,7 +186,7 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 ^- time.cloudflare.com           3   8   377   193   -294us[ -298us] +/- 4818us
 ```
 
-The pps line should end with "+/- 290ns" when everything is nice and stable. And
+The pps line should end with "+/- 291ns" when everything is nice and stable. And
 thats where this guide ends, enjoy your super-accurate gps! There are quite a few
 other optimisations you can do at this point, including the following:
 
