@@ -177,8 +177,13 @@ along these lines (the L80 GPS is one of the best units i've ever used in terms
 of stability, kicks the Neo6m and mkt units out the door):
 
 ```
-...
-
+root@nanopineo3:~# chronyc sources
+MS Name/IP address         Stratum Poll Reach LastRx Last sample
+===============================================================================
+#? NMEA                          0   0   377     0    +99ms[  +99ms] +/-  291ns
+#* PPS                           0   0   377     0   +138ns[ +135ns] +/-  291ns
+^- time.cloudflare.com           3   7   377   114   -332us[ -334us] +/- 5343us
+^- time.cloudflare.com           3   8   377   193   -294us[ -298us] +/- 4818us
 ```
 
 The pps line should end with "+/- 290ns" when everything is nice and stable. And
@@ -189,6 +194,7 @@ other optimisations you can do at this point, including the following:
 2) hard-set the cpu clock (i.e. remove auto frequency changes)
 3) minimise the OS
 4) setup permissions for things to connect to the ntp server
+5) Optimise the NMEA sentences from the GPS
 
 Would love to hear from people who give it a go, the Neo3 platform is one of the
 best platforms i've seen since the AR9331 based GLInet AR150 (POE) for accurate
