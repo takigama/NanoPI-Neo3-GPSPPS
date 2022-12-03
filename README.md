@@ -41,6 +41,23 @@ crw------- 1 root root 250, 1 Dec  3 04:34 /dev/pps1
 pps0 SHOULD be the gpio, and pps1 will be connected to the serial port, however there
 is no CD line on the NanoPI so that one is fundamentally useless to us.
 
+Next, update /etc/rc.local (this is the lazy way, but on a router entirely dedicated
+to one purpose, it'll surfice). From this repo, add the contents of rc.local before
+the line "exit 0":
+
+```
+...
+
+        stty -F /dev/ttyS1 115200 cs8
+        sleep 1
+done
+
+
+/usr/sbin/gpsd -N -n -s 115200 -S 2947 /dev/ttyS1 > /tmp/gpsd.log 2>&1 &
+
+exit 0
+```
+
 poweroff the router and connect the gps (see the connections section)
 
 When you boot back up, the gps should now be running at 115200 baud, and gpsd will be 
