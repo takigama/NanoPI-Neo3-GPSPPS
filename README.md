@@ -8,6 +8,8 @@ to achieve. I leave this as an excersize for the viewer...
 
 ## Modify Armbian
 
+Skip to "Quick Explanation" for the really quick way to do this
+
 We want to disable a few things before we get started, things we wont need (feel free
 to leave them running if you want them though). Lets disable smartmontools, gpsd socket
 service and the wpa_supplicant (Neo's dont have wifi anyways).
@@ -30,6 +32,8 @@ the pps device connected to /dev/pps0
 ```
 armbian-add-overlay ppsoverlay.dts
 ```
+
+## PPS 
 
 reboot.... and when you log back in, you should find two pps devices:
 ```
@@ -212,6 +216,7 @@ other optimisations you can do at this point, including the following:
 3) minimise the OS
 4) setup permissions for things to connect to the ntp server
 5) Optimise the NMEA sentences from the GPS
+6) Get the router pushing ptp packets
 
 Would love to hear from people who give it a go, the Neo3 platform is one of the
 best platforms i've seen since the AR9331 based GLInet AR150 (POE) for accurate
@@ -225,6 +230,36 @@ make another model that has:
 Technically the NanoPI R5C/S have at least the last one, which I find very interesting
 though it would have been perfect if the R5C had of had GPIO's and some way of adding
 a POE module.
+
+## Quick Explanation
+
+The quick, step by step method.
+
+* Clone this repo to /root/ntp - "git clone https://github.com/takigama/NanoPI-Neo3-GPSPPS.git /root/ntp"
+* Disable services - "systemctl disable smartmontools.service; systemctl disable gpsd.socket; systemctl disable wpa_supplicant.service" (as root)
+* As root: "apt update; apt install -y picocom"
+* As root: "cp /root/ntp/rc.local /etc/rc.local; chmod 775 /etc/rc.local"
+* As root: "git clone https://github.com/takigama/NanoPI-Neo3-GPSPPS.git /root/ntp"
+* As root: "armbian-add-overlay /root/ntp/ppsoverlay.dts"
+* As root: "cp /root/ntp/pps.conf /etc/chrony/conf.d/"
+* Power off, connect the gps and power on
+* Watch the sourcestats "watch chronyc sourcestats" (get offset of NMEA line within 200ms by adjusting /etc/chrony/conf.d/pps.conf)
+* Remove "noselect" from end of PPS line and reboot
+* Watch sources and tracking "watch chrony sources", be patient, cant take an hour to really stabilize.
+
+End result:
+
+```
+root@nanopineo3:~# chronyc sources
+MS Name/IP address         Stratum Poll Reach LastRx Last sample
+===============================================================================
+#? NMEA                          0   0   377     1   +102ms[ +102ms] +/-  291ns
+#* PPS                           0   0   377     0    +50ns[  +92ns] +/-  291ns
+...
+```
+
+So far, everyone i've build always ends with a error of 291ns on the pps line which
+is both impressive and good to see from a consistency perspective
 
 
 ## Connection..

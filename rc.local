@@ -1,3 +1,5 @@
+
+# just to make sure, we do this 5 times (sets baud to 115200 and outputs all nmea sentences - for L80 only)
 for i in "1 2 3 4 5"
 do
         echo $i > /tmp/res
@@ -9,5 +11,7 @@ do
         sleep 1
 done
 
-
+# start up gpsd
 /usr/sbin/gpsd -N -n -S 2947 /dev/ttyS1 > /tmp/gpsd.log 2>&1 &
+
+exit 0
